@@ -10,8 +10,8 @@ def tasks(name, duration):
 print(f"--- Threading Basic Example ---")
 
 # Create Thread objects
-thread1 = threading.Thread(target=tasks, args=("Thread-1", 2))
-thread2 = threading.Thread(target=tasks, args=("Thread-2", 3))
+thread1 = threading.Thread(target=tasks, args=("Thread-1", 5))
+thread2 = threading.Thread(target=tasks, args=("Thread-2", 10))
 
 # Start the threads
 start_time = time.time()
