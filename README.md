@@ -1,4 +1,4 @@
-# Python Asynchronous Programming and Concurrency Handling
+# Concurrent Python: Unlocking Performance with Threads, Async, and Processes
 
 Python offers several ways to handle concurrency, and it's vital to understand their differences and when to use each. This is a topic which I was curious for many years, but didn't have time, no a requirement to learn what it is. Looks like time has come, so I had a quick look at what it is and as usual, I thought to share what I learned with you. I am going to share below topics with you which I learnt during my exploration about this topic. 
 
@@ -30,7 +30,3 @@ python -m pip install requests # Or else you can use -> conda install requests
 ```
 
 Each topic has example code, and the example code is placed under the respective directories. Enjoy the lab! 
-
-
-
-

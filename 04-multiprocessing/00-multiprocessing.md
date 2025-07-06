@@ -12,7 +12,7 @@ Well now, let me explain you how this helps us.
 
 ## Creating and Starting Processes
 
-Let's get into business. Let me show you how to create and start a new process. 
+Let's get into business. Let me show you how to create and start a new process. Let's look at `01-create-start-processes.py`.
 
 ```python
 import multiprocessing
@@ -115,7 +115,8 @@ Let me show you an example now.
 
 A pipe is a two-way communication channel between two processes. 
 
-Let me show you an example now. 
+Let me show you an example now. Look at `02-pipes.py`.
+
 
 ```python
 import multiprocessing
@@ -200,7 +201,8 @@ Let's break down the key components of this improved script.
 
 A queue is a more flexible and robust way to communicate between processes. Especially between multiple producers and consumers. 
 
-Let me show you an example now. 
+Let me show you an example now. Let's look at `03-queues.py`.
+
 
 ```python
 import multiprocessing
@@ -299,7 +301,8 @@ A `Pool` object controls a pool of worker processes to which jobs can be submi
 
 For common scenarios where you want to apply a function to a collection of inputs using multiple processes, `multiprocessing.Pool` is very convenient. It manages a pool of worker processes for you, handling task distribution and result collection automatically.
 
-Let's see how it simplifies the CPU-bound task from our first example.
+Let's see how it simplifies the CPU-bound task from our first example. Let's look at `04-pools.py`.
+
 
 ```python
 import multiprocessing
@@ -346,7 +349,8 @@ if __name__ == "__main__":
 
 Compared to creating and managing `Process` objects manually, the `Pool` is significantly simpler and cleaner for this type of "map-reduce" workload.
 
-Another example
+Another example. Have a look at `05-pools-v2.py`.
+
 
 ```python
 import multiprocessing

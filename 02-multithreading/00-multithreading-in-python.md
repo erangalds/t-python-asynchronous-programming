@@ -11,6 +11,8 @@
 
 Let me now show you how to use the python `threading` module to create and start threads.
 
+Let's look at `01-starting-threads.py`
+
 ```python
 import threading
 import time
@@ -84,6 +86,8 @@ The current script demonstrates how threads are launched, but it's not a robust 
 
 This is done using the .join() method. Calling thread.join() will block the main thread's execution and force it to wait until that specific thread has finished.
 
+Let's look at `02-waiting-for-threads-to-complete.py`
+
 ```python
 import threading
 import time
@@ -136,7 +140,7 @@ Sometimes, when multiple threads try to access shared resources (like a global v
 
 A lock is the synchronization primitive. It's used to protest a critical section of the code. This ensures that only one thread can access the critical section at a time and execute it. 
 
-Let me now show you an example. 
+Let me now show you an example. Let's look at `03-locks.py`
 
 ```python
 import threading
@@ -287,7 +291,7 @@ A `semaphore` is a more generalized version of this. This is a security guard in
 + When a thread finishes its work and leaves the *critical section*, it signals the `semaphore` which increments the counter, allowing one of the waiting threads to enter.  
 
 
-Let me now show you an example.
+Let me now show you an example. Let's look at `04-semaphores.py`
 
 ```python
 import threading
@@ -346,7 +350,7 @@ This of a `treading.Event` as a simple signaling mechanism, like a flag or a tra
 + **Clear (or unset)**: The default state. It's like a red light.
 + **Set*: It's like a green light.
 
-Let me now show you an example.
+Let me now show you an example. Let's look at `05-events.py`
 
 ```python
 import threading
@@ -406,7 +410,8 @@ In short, `threading.Event` is a perfect tool for situations where one thread 
 
 ## Limitations due to the GIL
 
-The Global Interpreter Lock (GIL) prevents true parallelism for CPU-bound tasks. Let us look at an example. 
+The Global Interpreter Lock (GIL) prevents true parallelism for CPU-bound tasks. Let us look at an example. Let's look at `06-gil-impact-cpu-bound-tasks.py`
+
 
 ```python 
 import threading
@@ -468,7 +473,7 @@ As I explained earlier, the GIL is a mutex that protects access to Python object
 
 Therefore for CPU-bound tasks, multithreading in Python is not the solution for performance. The real solution for CPU-bound parallelism is using the `multiprocessing` module, which bypasses the GIL by giving each task its own separate process and its own Python interpreter.
 
-Let me show you the same example using `multiprocessing`.
+Let me show you the same example using `multiprocessing`. Let's look at `07-multiprocessing.py`. 
 
 ```python
 import multiprocessing

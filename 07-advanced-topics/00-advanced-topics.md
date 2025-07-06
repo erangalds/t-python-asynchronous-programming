@@ -35,7 +35,14 @@ Sometimes you have a blocking function (e.g., a synchronous database call, a CPU
 
 `asyncio.to_thread()` (Python 3.9+) or `loop.run_in_executor()` (older versions) are used for this. They execute the blocking code in a separate thread (from a default `ThreadPoolExecutor`) and then return control to the event loop when the blocking task completes.
 
-Let me show this to you using an example. 
+Let me show this to you using an example. Have a look at `01-integrate-asyncio-with-blocking-code.py`.
+
+### High-Level Goal
+
+The primary objective of this script is to demonstrate how to execute **blocking, synchronous code** (like a standard `requests.get()` call) within an **asynchronous `asyncio` program** without freezing the entire application.
+
+In `asyncio`, the event loop runs in a single thread. If you call a regular function that blocks (e.g., waits for a network response or a file to be read), the entire event loop pauses. This stops all other asynchronous tasks from running and defeats the purpose of concurrency. This script showcases the modern and recommended solution to this problem: `asyncio.to_thread()`.
+
 
 ```python 
 import asyncio
@@ -85,11 +92,6 @@ if __name__ == "__main__":
     print("Main program finished.")
 ```
 
-### High-Level Goal
-
-The primary objective of this script is to demonstrate how to execute **blocking, synchronous code** (like a standard `requests.get()` call) within an **asynchronous `asyncio` program** without freezing the entire application.
-
-In `asyncio`, the event loop runs in a single thread. If you call a regular function that blocks (e.g., waits for a network response or a file to be read), the entire event loop pauses. This stops all other asynchronous tasks from running and defeats the purpose of concurrency. This script showcases the modern and recommended solution to this problem: `asyncio.to_thread()`.
 
 ### Code Breakdown
 

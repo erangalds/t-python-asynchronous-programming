@@ -15,7 +15,7 @@ When I started to learn about this standard python library, I found three things
 + `async def`: Defines a coroutine function. When you call an `async def` function, it doesn't execute immediately; instead it returns a coroutine object.
 + `await`: can only be used inside an `async def` function. It pauses the execution of the current coroutine untile the awaited 'awaitable' (another coroutine, a task, a future) is complete. During this pause, the event loop can run other tasks. 
 
-Let me show you an example now. 
+Let me show you an example now. Let's look at `01-coroutines.py`. 
 
 ```python
 import asyncio
@@ -122,7 +122,7 @@ You typically interact with the event loop indirectly through `asyncio.run()` or
 
 A Task is an `asyncio` object that wraps a coroutine and schedules its execution on the event loop. That's how you run multiple coroutines concurrently. 
 
-Let's look at an example now. 
+Let's look at an example now. Let's look at `02-tasks.py`. 
 
 ```python
 import asyncio
@@ -169,7 +169,8 @@ This works very similar to the previous example.
 
 ### Example with HTTP Requests with `aiohttp`
 
-To truely leverage `asyncio` for I/O, we need asynchronous versions of I/O libraries. For HTTP requests, `requests` library is a *blocking* type. Therefore, we need `aiohttp` for asynchronous HTTP. 
+To truely leverage `asyncio` for I/O, we need asynchronous versions of I/O libraries. For HTTP requests, `requests` library is a *blocking* type. Therefore, we need `aiohttp` for asynchronous HTTP. Let's look at an example now. Let's look at `03-aiohttp-usecase.py`. 
+
 
 ```python
 # pip install aiohttp
@@ -221,23 +222,23 @@ Let's go through the script section by section.
 
 1. `fetch_url(session, url)` Coroutine
 
-- **`async def`**: This declares the function as a **coroutine**. It can be paused and resumed.
-- **`async with session.get(url) as response:`**: This is the core of the asynchronous operation.
-    - `session.get(url)` initiates an HTTP GET request but **does not block**. It immediately returns an awaitable object.
-    - The `await` (implicit in `async with`) tells the `asyncio` event loop: "I'm starting a network request. This will take time. You can pause me here and go run other tasks that are ready."
-    - Once the web server responds and the data starts arriving, the event loop will "wake up" this coroutine and resume its execution inside the `with` block.
-- **`status = response.status`**: This line runs only _after_ the `await` is complete and we have a response from the server. It extracts the HTTP status code (e.g., 200 for OK).
-- **`return status`**: The coroutine finishes by returning the status code.
+    - **`async def`**: This declares the function as a **coroutine**. It can be paused and resumed.
+    - **`async with session.get(url) as response:`**: This is the core of the asynchronous operation.
+        - `session.get(url)` initiates an HTTP GET request but **does not block**. It immediately returns an awaitable object.
+        - The `await` (implicit in `async with`) tells the `asyncio` event loop: "I'm starting a network request. This will take time. You can pause me here and go run other tasks that are ready."
+        - Once the web server responds and the data starts arriving, the event loop will "wake up" this coroutine and resume its execution inside the `with` block.
+    - **`status = response.status`**: This line runs only _after_ the `await` is complete and we have a response from the server. It extracts the HTTP status code (e.g., 200 for OK).
+    - **`return status`**: The coroutine finishes by returning the status code.
 
 2. `main_http_requests()` Coroutine
 
-- **`async with aiohttp.ClientSession() as session:`**: This is a crucial best practice. It creates a single `ClientSession` object that manages a pool of connections. Reusing the session for all requests is much more efficient than creating a new one for each URL, as it avoids the overhead of setting up new connections every time.
-- **`tasks = [fetch_url(session, url) for url in urls]`**: This line uses a list comprehension to create a list of coroutine objects. **It does not run them yet.** It's like preparing a to-do list.
-- **`results = await asyncio.gather(*tasks)`**: This is where the magic happens.
-    - `asyncio.gather()` takes all the coroutine objects from the `tasks` list.
-    - It schedules all of them to run on the event loop concurrently.
-    - The `await` keyword pauses the `main_http_requests` function until **all** the tasks passed to `gather` have completed.
-    - Once all are done, it collects their return values (the status codes) into a single list, `results`.
+    - **`async with aiohttp.ClientSession() as session:`**: This is a crucial best practice. It creates a single `ClientSession` object that manages a pool of connections. Reusing the session for all requests is much more efficient than creating a new one for each URL, as it avoids the overhead of setting up new connections every time.
+    - **`tasks = [fetch_url(session, url) for url in urls]`**: This line uses a list comprehension to create a list of coroutine objects. **It does not run them yet.** It's like preparing a to-do list.
+    - **`results = await asyncio.gather(*tasks)`**: This is where the magic happens.
+        - `asyncio.gather()` takes all the coroutine objects from the `tasks` list.
+        - It schedules all of them to run on the event loop concurrently.
+        - The `await` keyword pauses the `main_http_requests` function until **all** the tasks passed to `gather` have completed.
+        - Once all are done, it collects their return values (the status codes) into a single list, `results`.
 
 #### Step-by-Step Execution Flow
 
